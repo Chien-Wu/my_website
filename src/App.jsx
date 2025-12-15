@@ -1,8 +1,31 @@
+import { ChatProvider } from "./context/ChatContext";
+import { useMediaQuery } from "./hooks/useMediaQuery";
+import NameCard from "./components/NameCard";
+import ChatContainer from "./components/ChatContainer";
+import CRTOverlay from "./components/UI/CRTOverlay";
+
 function App() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-      <h1 className="text-4xl font-bold">Hello World By Chien</h1>
-    </div>
+    <ChatProvider>
+      <div className="flex flex-col md:flex-row h-screen bg-terminal-bg text-terminal-text overflow-hidden">
+        {/* CRT Effect Overlay */}
+        <CRTOverlay />
+
+        {/* Desktop: Name Card Sidebar (hidden on mobile) */}
+        {!isMobile && (
+          <div className="w-full md:w-1/3 md:sticky md:top-0 md:h-screen overflow-y-auto">
+            <NameCard />
+          </div>
+        )}
+
+        {/* Chat Container */}
+        <div className="flex-1 w-full md:w-1/2">
+          <ChatContainer />
+        </div>
+      </div>
+    </ChatProvider>
   );
 }
 

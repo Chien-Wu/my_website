@@ -5,7 +5,20 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        terminal: {
+          bg: '#000000',
+          text: '#33ff33',
+          dim: '#22aa22',
+          border: '#33ff33',
+        }
+      },
+      fontFamily: {
+        mono: ['IBM Plex Mono', 'monospace'],
+        terminal: ['VT323', 'monospace'],
+      }
+    },
   },
   plugins: [],
 }
