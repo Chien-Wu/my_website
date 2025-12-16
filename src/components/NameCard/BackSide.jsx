@@ -35,12 +35,12 @@ Wx'.'........................................lNMMM
 ''............................................'kMM`}
       </pre>
 
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 mx-8">
         <h2 className="text-xl font-bold font-terminal text-glow mb-2">
           CONNECT
         </h2>
         <div className="text-xs text-terminal-dim">
-          Click anywhere to return
+          Hi I'm Chien, Creator of the site, you found the back of my name card!
         </div>
       </div>
 
@@ -49,7 +49,7 @@ Wx'.'........................................lNMMM
       {/* Links */}
       <div className="space-y-4 text-sm">
         <a
-          href="https://github.com/yourusername"
+          href="https://github.com/Chien-Wu"
           target="_blank"
           rel="noopener noreferrer"
           className="block hover:text-glow transition-all"
@@ -58,14 +58,14 @@ Wx'.'........................................lNMMM
           <span className="text-terminal-dim">$</span> GitHub →
         </a>
         <a
-          href="mailto:your.email@example.com"
+          href="mailto:chien572.website@gmail.com"
           className="block hover:text-glow transition-all"
           onClick={(e) => e.stopPropagation()}
         >
           <span className="text-terminal-dim">$</span> Email →
         </a>
         <a
-          href="https://linkedin.com/in/yourusername"
+          href="https://www.linkedin.com/in/chien-wu-711829356/"
           target="_blank"
           rel="noopener noreferrer"
           className="block hover:text-glow transition-all"
@@ -73,12 +73,21 @@ Wx'.'........................................lNMMM
         >
           <span className="text-terminal-dim">$</span> LinkedIn →
         </a>
+        <a
+          href="https://instagram.com/572_chien"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block hover:text-glow transition-all"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <span className="text-terminal-dim">$</span> Instagram →
+        </a>
       </div>
 
       <div className="border-t-2 border-terminal-border my-6"></div>
 
       <div className="text-xs text-terminal-dim text-center">
-        LINKS ACTIVE
+        Click anywhere to return
       </div>
     </div>
   );
