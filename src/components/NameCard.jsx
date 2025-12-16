@@ -76,9 +76,50 @@ export default function NameCard({ asMessage = false }) {
             </div>
           </div>
 
-          {/* Scrollable Content Area */}
-          <div className="overflow-y-auto h-[calc(100%-5rem)] px-4">
-            {/* ASCII Art Portrait Placeholder */}
+          {/* Name and Title */}
+          <div
+            className="text-center mb-6 -m-16 py-16 font-bold text-glow"
+            style={{ fontFamily: "'Rubik 80s Fade', monospace" }}
+          >
+            <div className="flex gap-3">
+              <div className="w-3/4 text-right">
+                <p className="text-8xl">CHi-EN</p>
+              </div>
+              <div className="w-1/4 text-left">
+                <p className="text-6xl">WU</p>
+                <p className="text-4xl">572</p>
+              </div>
+            </div>
+
+            <div className="text-sm text-terminal-dim">
+              Developer / Designer / Creator
+            </div>
+          </div>
+
+          <div className="border-t-2 border-terminal-border my-4"></div>
+
+          {/* Bio/Tagline */}
+          <div className="text-sm text-terminal-text mb-6 leading-relaxed">
+            Building the future, one terminal command at a time.
+          </div>
+
+          {/* Footer */}
+          {!asMessage && (
+            <>
+              <div className="border-t-2 border-terminal-border my-4"></div>
+              <div className="text-xs text-terminal-dim text-center">
+                SYSTEM READY
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Back Side: Links */}
+      {isFlipped && (
+        <div className={shouldFade ? "content-fade-in" : ""}>
+          <div className="p-8 overflow-y-auto h-full">
+            {/* ASCII Art Portrait */}
             <pre className="text-xs text-terminal-text text-glow mb-4 text-center font-mono leading-tight">
               {`
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -108,87 +149,52 @@ Wx'.'........................................lNMMM
 ''............................................'kMM`}
             </pre>
 
-            {/* Name and Title */}
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold font-terminal text-glow mb-2">
-                CHi-EN572
-              </h1>
-              <div className="text-sm text-terminal-dim">
-                Developer / Designer / Creator
+            <div className="text-center mb-8">
+              <h2 className="text-xl font-bold font-terminal text-glow mb-2">
+                CONNECT
+              </h2>
+              <div className="text-xs text-terminal-dim">
+                Click anywhere to return
               </div>
             </div>
 
-            {/* Separator */}
-            <div className="border-t-2 border-terminal-border my-4"></div>
+            <div className="border-t-2 border-terminal-border my-6"></div>
 
-            {/* Bio/Tagline */}
-            <div className="text-sm text-terminal-text mb-6 leading-relaxed">
-              Building the future, one terminal command at a time.
+            {/* Links */}
+            <div className="space-y-4 text-sm">
+              <a
+                href="https://github.com/yourusername"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-glow transition-all"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="text-terminal-dim">$</span> GitHub →
+              </a>
+              <a
+                href="mailto:your.email@example.com"
+                className="block hover:text-glow transition-all"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="text-terminal-dim">$</span> Email →
+              </a>
+              <a
+                href="https://linkedin.com/in/yourusername"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-glow transition-all"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="text-terminal-dim">$</span> LinkedIn →
+              </a>
             </div>
 
-            {/* Footer */}
-            {!asMessage && (
-              <>
-                <div className="border-t-2 border-terminal-border my-4"></div>
-                <div className="text-xs text-terminal-dim text-center">
-                  SYSTEM READY
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
+            <div className="border-t-2 border-terminal-border my-6"></div>
 
-      {/* Back Side: Links */}
-      {isFlipped && (
-        <div className={shouldFade ? "content-fade-in" : ""}>
-        <div className="p-8 overflow-y-auto h-full">
-          <div className="text-center mb-8">
-            <h2 className="text-xl font-bold font-terminal text-glow mb-2">
-              CONNECT
-            </h2>
-            <div className="text-xs text-terminal-dim">
-              Click anywhere to return
+            <div className="text-xs text-terminal-dim text-center">
+              LINKS ACTIVE
             </div>
           </div>
-
-          <div className="border-t-2 border-terminal-border my-6"></div>
-
-          {/* Links */}
-          <div className="space-y-4 text-sm">
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block hover:text-glow transition-all"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className="text-terminal-dim">$</span> GitHub →
-            </a>
-            <a
-              href="mailto:your.email@example.com"
-              className="block hover:text-glow transition-all"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className="text-terminal-dim">$</span> Email →
-            </a>
-            <a
-              href="https://linkedin.com/in/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block hover:text-glow transition-all"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className="text-terminal-dim">$</span> LinkedIn →
-            </a>
-          </div>
-
-          <div className="border-t-2 border-terminal-border my-6"></div>
-
-          <div className="text-xs text-terminal-dim text-center">
-            LINKS ACTIVE
-          </div>
-        </div>
         </div>
       )}
     </div>
