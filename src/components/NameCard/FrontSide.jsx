@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import phoneImage from "../../assets/phone.png";
+import MusicPlayerControls from "../MusicPlayerControls";
 
 /**
  * Front Side of Name Card
  * Shows phone, name, bio
  */
-export default function FrontSide({ asMessage, shouldFade }) {
+export default function FrontSide({ asMessage, shouldFade, onFlip }) {
   const birthDate = new Date("2005-08-14T12:13:08-05:00");
   const HUNDRED_YEARS_SECONDS = 3153600000;
 
@@ -52,8 +53,9 @@ export default function FrontSide({ asMessage, shouldFade }) {
 
         {/* Name Logo */}
         <div
-          className="text-center font-bold text-glow my-10"
+          className="text-center font-bold text-glow my-10 cursor-pointer"
           style={{ fontFamily: "'Rubik 80s Fade', monospace" }}
+          onClick={onFlip}
         >
           <div className="flex gap-4">
             <div className="w-3/4 text-right gap-1">
@@ -100,6 +102,9 @@ export default function FrontSide({ asMessage, shouldFade }) {
           </div>
         </div>
       </div>
+
+      {/* Music Player */}
+      {!asMessage && <MusicPlayerControls />}
 
       {/* Footer - Sticks to bottom */}
       {!asMessage && (

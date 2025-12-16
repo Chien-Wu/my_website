@@ -1,4 +1,5 @@
 import { ChatProvider } from "./context/ChatContext";
+import { MusicProvider } from "./contexts/MusicContext";
 import { useMediaQuery } from "./hooks/useMediaQuery";
 import NameCard from "./components/NameCard";
 import ChatContainer from "./components/ChatContainer";
@@ -9,22 +10,24 @@ function App() {
 
   return (
     <ChatProvider>
-      <div className="flex flex-col md:flex-row h-screen bg-terminal-bg text-terminal-text overflow-hidden">
-        {/* CRT Effect Overlay */}
-        <CRTOverlay />
+      <MusicProvider>
+        <div className="flex flex-col md:flex-row h-screen bg-terminal-bg text-terminal-text overflow-hidden">
+          {/* CRT Effect Overlay */}
+          <CRTOverlay />
 
-        {/* Desktop: Name Card Sidebar (hidden on mobile) */}
-        {!isMobile && (
-          <div className="w-full md:w-1/3 md:sticky md:top-0 md:h-screen overflow-y-auto">
-            <NameCard />
+          {/* Desktop: Name Card Sidebar (hidden on mobile) */}
+          {!isMobile && (
+            <div className="w-full md:w-1/3 md:sticky md:top-0 md:h-screen overflow-y-auto">
+              <NameCard />
+            </div>
+          )}
+
+          {/* Chat Container */}
+          <div className="flex-1 w-full md:w-1/2">
+            <ChatContainer />
           </div>
-        )}
-
-        {/* Chat Container */}
-        <div className="flex-1 w-full md:w-1/2">
-          <ChatContainer />
         </div>
-      </div>
+      </MusicProvider>
     </ChatProvider>
   );
 }

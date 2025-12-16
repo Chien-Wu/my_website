@@ -51,7 +51,7 @@ export default function NameCard({ asMessage = false }) {
   };
 
   return (
-    <div className={sessionClasses} onClick={handleFlip}>
+    <div className={sessionClasses}>
       {/* Layer 1: Animation overlays (z-50) */}
       {isFlipping && showErrors && <ErrorMessageOverlay />}
       {isFlipping && showMatrix && <DataFlowOverlay />}
@@ -67,9 +67,13 @@ export default function NameCard({ asMessage = false }) {
       {/* Layer 4: Content (z-20) - scrollable, can overlap permanent outline */}
       <div className="absolute inset-0 overflow-y-cut z-20">
         {!isFlipped && (
-          <FrontSide asMessage={asMessage} shouldFade={shouldFade} />
+          <FrontSide asMessage={asMessage} shouldFade={shouldFade} onFlip={handleFlip} />
         )}
-        {isFlipped && <BackSide shouldFade={shouldFade} />}
+        {isFlipped && (
+          <div onClick={handleFlip} className="cursor-pointer h-full">
+            <BackSide shouldFade={shouldFade} />
+          </div>
+        )}
       </div>
     </div>
   );
