@@ -7,6 +7,7 @@
   --bg: #000000;
   --text: #33ff33;
   --text-dim: #22aa22;
+  --text-blue: #00d4ff;
   --border: #33ff33;
   --glow: #33ff3355;
   --scanline: #00ff0011;
@@ -20,7 +21,7 @@
 }
 
 body {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   background: var(--bg);
   color: var(--text);
   overflow: hidden;
@@ -39,7 +40,7 @@ body {
 
 /* Scanlines */
 .crt-overlay::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -57,7 +58,7 @@ body {
 
 /* Screen flicker */
 .crt-overlay::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -149,10 +150,12 @@ body {
 
 /* Blinking cursor */
 @keyframes blink {
-  0%, 49% {
+  0%,
+  49% {
     opacity: 1;
   }
-  50%, 100% {
+  50%,
+  100% {
     opacity: 0;
   }
 }
