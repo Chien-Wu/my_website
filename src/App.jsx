@@ -15,16 +15,28 @@ function App() {
           {/* CRT Effect Overlay */}
           <CRTOverlay />
 
-          {/* Desktop: Name Card Sidebar (hidden on mobile) */}
+          {/* Desktop: Name Card Sidebar */}
           {!isMobile && (
             <div className="w-full md:w-[390px] md:flex-shrink-0 md:sticky md:top-0 md:h-screen overflow-y-auto">
               <NameCard />
             </div>
           )}
 
-          {/* Chat Container */}
-          <div className="flex-1 w-full">
-            <ChatContainer />
+          {/* Mobile & Chat Container */}
+          <div className="flex-1 w-full flex flex-col overflow-y-auto">
+            {/* Mobile: Name Card on Top */}
+            {isMobile && (
+              <div className="flex-shrink-0">
+                <NameCard />
+              </div>
+            )}
+
+            {/* Chat Container */}
+            <div
+              className={isMobile ? "flex-shrink-0" : "flex-1 overflow-hidden"}
+            >
+              <ChatContainer />
+            </div>
           </div>
         </div>
       </MusicProvider>

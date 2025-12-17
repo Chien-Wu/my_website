@@ -58,16 +58,20 @@ export default function NameCard({ asMessage = false }) {
 
       {/* Layer 2: Temporary outline during error messages only (z-60) - stays on top of animations */}
       {showTempOutline && (
-        <div className="terminal-box absolute inset-0 m-4 pointer-events-none z-[60]"></div>
+        <div className="terminal-box absolute inset-0 m-6 pointer-events-none z-[60]"></div>
       )}
 
       {/* Layer 3: Permanent outline (z-10) - can be overlapped by content */}
-      <div className="terminal-box absolute inset-0 m-4 pointer-events-none z-10"></div>
+      <div className="terminal-box absolute inset-0 m-6 pointer-events-none z-10"></div>
 
       {/* Layer 4: Content (z-20) - scrollable, can overlap permanent outline */}
       <div className="absolute inset-0 overflow-y-cut z-20">
         {!isFlipped && (
-          <FrontSide asMessage={asMessage} shouldFade={shouldFade} onFlip={handleFlip} />
+          <FrontSide
+            asMessage={asMessage}
+            shouldFade={shouldFade}
+            onFlip={handleFlip}
+          />
         )}
         {isFlipped && (
           <div onClick={handleFlip} className="cursor-pointer h-full">
