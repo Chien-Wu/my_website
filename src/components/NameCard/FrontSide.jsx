@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import phoneImage from "../../assets/phone.png";
-import MusicPlayerControls from "../MusicPlayerControls";
+import MusicPlayerControls from "./MusicPlayerControls";
 
 /**
  * Front Side of Name Card
@@ -43,7 +43,7 @@ export default function FrontSide({ asMessage, shouldFade, onFlip }) {
             <img src={phoneImage} alt="Phone" className="w-16 object-contain" />
           </div>
           <div className="p-0 my-2">
-            <pre className="text-s text-left leading-tight font-mono">
+            <pre className="text-s text-left leading-snug font-mono">
               <p>SELECT COINS:</p>
               <p>[AU] 04-32-465-311</p>
               <p>[TW] 09-66-919-572</p>
@@ -57,25 +57,25 @@ export default function FrontSide({ asMessage, shouldFade, onFlip }) {
           style={{ fontFamily: "'Rubik 80s Fade', monospace" }}
           onClick={onFlip}
         >
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             <div className="w-3/4 text-right gap-1">
-              <div className="text-8xl bg-terminal-bg">CHi-EN</div>
+              <div className="text-7xl bg-terminal-bg">CHi-EN</div>
               <div className="text-sm text-terminal-dim">
                 artist/developer/designer
               </div>
             </div>
 
             <div className="w-1/4 text-left gap-1">
-              <p className="text-7xl bg-terminal-bg">WU</p>
-              <p className="text-5xl bg-terminal-bg">572</p>
+              <p className="text-6xl bg-terminal-bg">WU</p>
+              <p className="text-4xl bg-terminal-bg">572</p>
             </div>
           </div>
         </div>
 
         {/* Seconds lived and Progress bar*/}
-        <div className="justify-center flex-col m-8 items-center">
-          <div className="text-sm text-terminal-text leading-relaxed mb-2 text-center">
-            {"living ("}
+        <div className="justify-center flex-col mx-8 my-4 items-center">
+          <div className="text-xs text-terminal-text leading-relaxed mb-2 text-center">
+            {"alive... ("}
             {secondsLived.toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
@@ -83,7 +83,7 @@ export default function FrontSide({ asMessage, shouldFade, onFlip }) {
             {" of 3,153,600,000)"}
           </div>
 
-          <div className="w-full bg-terminal-bg border border-terminal-border h-4 relative overflow-hidden">
+          <div className="w-3/4 mx-auto bg-terminal-bg border border-terminal-border h-8 relative overflow-hidden">
             <div
               className="vintage-progress-bar h-full absolute top-0 left-0 bg-terminal-text overflow-hidden"
               style={{ width: `${progressPercentage}%` }}
@@ -113,7 +113,7 @@ export default function FrontSide({ asMessage, shouldFade, onFlip }) {
           <div className="text-xs text-terminal-dim text-center">
             SYSTEM READY
           </div>
-          <div className="w-3/4 text-right text-sm text-terminal-dim">
+          <div className="text-xs text-terminal-dim text-center">
             since 2025-12-16T08:19:07-05:00
           </div>
         </div>

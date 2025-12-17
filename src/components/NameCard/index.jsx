@@ -20,8 +20,8 @@ export default function NameCard({ asMessage = false }) {
 
   // Session container - full area, no padding/margin
   const sessionClasses = asMessage
-    ? "relative cursor-pointer h-screen mb-4"
-    : "relative cursor-pointer h-[calc(100vh-2rem)]";
+    ? "relative cursor-pointer h-screen mb-4 overflow-hidden"
+    : "relative cursor-pointer h-[calc(100vh-2rem)] overflow-hidden";
 
   const handleFlip = () => {
     if (isFlipping) return; // Prevent spam clicking

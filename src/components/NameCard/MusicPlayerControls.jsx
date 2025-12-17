@@ -1,16 +1,27 @@
-import { useMusic } from '../contexts/MusicContext';
+import { useMusic } from "../../contexts/MusicContext";
 
 /**
  * Music Player Controls Component
  * Displays current song and playback controls
  */
 export default function MusicPlayerControls() {
-  const { currentSong, isPlaying, volume, isLoading, toggle, next, previous, setVolume } = useMusic();
+  const {
+    currentSong,
+    isPlaying,
+    volume,
+    isLoading,
+    toggle,
+    next,
+    previous,
+    setVolume,
+  } = useMusic();
 
   if (isLoading) {
     return (
       <div className="terminal-box p-3 m-4">
-        <div className="text-xs text-terminal-dim text-center">Loading music...</div>
+        <div className="text-xs text-terminal-dim text-center">
+          Loading music...
+        </div>
       </div>
     );
   }
@@ -43,9 +54,9 @@ export default function MusicPlayerControls() {
         <button
           onClick={toggle}
           className="text-3xl text-terminal-text hover:text-glow transition-all"
-          title={isPlaying ? 'Pause' : 'Play'}
+          title={isPlaying ? "Pause" : "Play"}
         >
-          {isPlaying ? '⏸' : '▶'}
+          {isPlaying ? "⏸" : "▶"}
         </button>
         <button
           onClick={next}
@@ -67,7 +78,9 @@ export default function MusicPlayerControls() {
           onChange={(e) => setVolume(e.target.value / 100)}
           className="flex-1 h-1 bg-terminal-bg-dim rounded appearance-none cursor-pointer"
           style={{
-            background: `linear-gradient(to right, var(--text) 0%, var(--text) ${volume * 100}%, var(--text-dim) ${volume * 100}%, var(--text-dim) 100%)`
+            background: `linear-gradient(to right, var(--text) 0%, var(--text) ${
+              volume * 100
+            }%, var(--text-dim) ${volume * 100}%, var(--text-dim) 100%)`,
           }}
         />
         <span className="text-xs text-terminal-dim w-8 text-right">

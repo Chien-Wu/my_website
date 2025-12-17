@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audio Visualizer Test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+  <style>
+    body { font-family: monospace; background: #000; color: #0f0; padding: 20px; }
+    #visualizer {
+      width: 20px;
+      height: 200px;
+      background: #111;
+      border: 1px solid #0f0;
+      position: relative;
+      margin: 20px 0;
+    }
+    #bar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(to top, #0f0 0%, #0ff 100%);
+      transition: height 0.05s;
+    }
+    button {
+      background: #0f0;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: monospace;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Audio Visualizer Test</h1>
+  <button id="play">Play</button>
+  <button id="pause">Pause</button>
+  <div id="log"></div>
+  <div id="visualizer">
+    <div id="bar"></div>
+  </div>
+  <div id="level">Level: 0</div>
+
+  <script>
+    const log = (msg) => {
+      console.log(msg);
+      document.getElementById('log').innerHTML += msg + '<br>';
+    };
+
+    log('[TEST] Initializing...');
+
+    // Create Howl instance
+    const sound = new Howl({
+      src: ['https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'],
+      html5: false,
+      volume: 0.5,
+      onload: () => log('[TEST] Sound loaded'),
+      onloaderror: (id, err) => log('[TEST] Load error: ' + err),
+      onplay: () => log('[TEST] Playing'),
+      onpause: () => log('[TEST] Paused')
+    });
+
+    log('[TEST] Howler.ctx: ' + !!Howler.ctx);
+    log('[TEST] Howler.masterGain: ' + !!Howler.masterGain);
+
+    // Setup analyser - Need to reconnect the audio routing
+    let analyser = null;
+    let dataArray = null;
+
+    if (Howler.ctx) {
+      analyser = Howler.ctx.createAnalyser();
+      analyser.fftSize = 256;
+
+      // IMPORTANT: Reconnect audio routing
+      // Default: masterGain -> destination
+      // We need: masterGain -> analyser -> destination
+
+      try {
+        // Disconnect masterGain from its current connection
+        Howler.masterGain.disconnect();
+
+        // Connect: masterGain -> analyser -> destination
+        Howler.masterGain.connect(analyser);
+        analyser.connect(Howler.ctx.destination);
+
+        log('[TEST] Audio routing: masterGain -> analyser -> destination');
+      } catch(e) {
+        log('[TEST] ERROR reconnecting: ' + e);
+      }
+
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+      log('[TEST] Analyser created with frequencyBinCount: ' + analyser.frequencyBinCount);
+    } else {
+      log('[TEST] ERROR: No Howler.ctx!');
+    }
+
+    // Play/Pause buttons
+    document.getElementById('play').onclick = () => {
+      log('[TEST] Play button clicked');
+      sound.play();
+    };
+
+    document.getElementById('pause').onclick = () => {
+      log('[TEST] Pause button clicked');
+      sound.pause();
+    };
+
+    // Animation loop
+    let frameCount = 0;
+    const updateVisualizer = () => {
+      if (analyser && dataArray && sound.playing()) {
+        analyser.getByteFrequencyData(dataArray);
+
+        let sum = 0;
+        for (let i = 0; i < dataArray.length; i++) {
+          sum += dataArray[i];
+        }
+        const average = sum / dataArray.length;
+        const level = (average / 255) * 100;
+
+        document.getElementById('bar').style.height = level + '%';
+        document.getElementById('level').textContent = 'Level: ' + level.toFixed(1);
+
+        frameCount++;
+        if (frameCount % 60 === 0) {
+          log('[TEST] Level: ' + level.toFixed(1) + ', Sample data: [' + Array.from(dataArray).slice(0, 5).join(',') + ']');
+        }
+      }
+
+      requestAnimationFrame(updateVisualizer);
+    };
+
+    updateVisualizer();
+    log('[TEST] Animation loop started');
+  </script>
+</body>
+</html>

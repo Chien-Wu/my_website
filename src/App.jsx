@@ -1,4 +1,4 @@
-import { ChatProvider } from "./context/ChatContext";
+import { ChatProvider } from "./contexts/ChatContext";
 import { MusicProvider } from "./contexts/MusicContext";
 import { useMediaQuery } from "./hooks/useMediaQuery";
 import NameCard from "./components/NameCard";
@@ -17,13 +17,13 @@ function App() {
 
           {/* Desktop: Name Card Sidebar (hidden on mobile) */}
           {!isMobile && (
-            <div className="w-full md:w-1/3 md:sticky md:top-0 md:h-screen overflow-y-auto">
+            <div className="w-full md:w-[390px] md:flex-shrink-0 md:sticky md:top-0 md:h-screen overflow-y-auto">
               <NameCard />
             </div>
           )}
 
           {/* Chat Container */}
-          <div className="flex-1 w-full md:w-1/2">
+          <div className="flex-1 w-full">
             <ChatContainer />
           </div>
         </div>

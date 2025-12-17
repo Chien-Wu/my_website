@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useChat } from "../context/ChatContext";
+import { useChat } from "../contexts/ChatContext";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";

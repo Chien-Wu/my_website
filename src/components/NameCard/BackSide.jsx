@@ -6,7 +6,7 @@ export default function BackSide({ shouldFade }) {
   return (
     <div className={`p-8 ${shouldFade ? "content-fade-in" : ""}`}>
       {/* ASCII Art Portrait */}
-      <pre className="text-xs text-terminal-text text-glow mb-4 text-center font-mono leading-tight">
+      <pre className="text-[0.6rem] text-terminal-text text-glow mb-4 text-center font-mono leading-tight">
         {`
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -40,7 +40,8 @@ Wx'.'........................................lNMMM
           CONNECT
         </h2>
         <div className="text-xs text-terminal-dim">
-          Hi I'm Chien, Creator of the site, you found the back of my name card!
+          Hi! this is Chien, site creator... you found the back of my name card!
+          i thought no one's gonna found it...
         </div>
       </div>
 
