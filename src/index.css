@@ -253,6 +253,55 @@ body {
   box-shadow: 0 0 20px rgba(3, 68, 35, 0.8);
 }
 
+/* Vintage Message Box Styles */
+.vintage-message-box {
+  border: 2px solid var(--border);
+  box-shadow: 0 0 10px var(--glow);
+  background: rgba(0, 0, 0, 0.6);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.vintage-message-header {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 5px var(--glow);
+}
+
+.vintage-message-content {
+  padding: 12px;
+  line-height: 1.6;
+}
+
+.vintage-avatar {
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 5px var(--glow);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.vintage-error-box {
+  border: 2px double var(--border);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+  background: rgba(40, 0, 0, 0.6);
+}
+
+.vintage-timestamp {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+}
+
+/* Box-drawing characters styling */
+.box-drawing {
+  font-family: "IBM Plex Mono", monospace;
+  line-height: 1;
+  user-select: none;
+}
+
 /* Mobile: reduce effects for performance */
 @media (max-width: 768px) {
   .crt-overlay::before {

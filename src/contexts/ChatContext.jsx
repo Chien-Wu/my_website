@@ -109,6 +109,9 @@ export function ChatProvider({ children }) {
     } catch (err) {
       setError(err.message)
 
+      // Remove the empty assistant message
+      setMessages((prev) => prev.filter((msg) => msg.id !== assistantMessageId))
+
       // Add error message to chat
       const errorMessage = {
         id: generateMessageId(),
