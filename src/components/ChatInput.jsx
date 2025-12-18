@@ -41,7 +41,7 @@ export default function ChatInput({ onSend, isLoading }) {
             onKeyDown={handleKeyDown}
             disabled={isLoading}
             placeholder="Type your message here..."
-            className="flex-1 bg-transparent border-none outline-none text-terminal-text placeholder-terminal-dim font-mono"
+            className="radius-2 flex-1 bg-transparent border-none outline-none text-terminal-text placeholder-terminal-dim font-mono"
             autoComplete="off"
           />
           <span className="cursor-blink ml-1">_</span>

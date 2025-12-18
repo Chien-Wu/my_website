@@ -101,15 +101,25 @@ export default function FrontSide({ asMessage, shouldFade, onFlip }) {
         </div>
       </div>
 
+      {/* Creator's Message */}
+      {!asMessage && (
+        <div className="mx-6 p-4 text-xs text-terminal-dim">
+          <p>/* Note From Site Creator Chien: */</p>
+          <p>/* None of my project/info is here, */</p>
+          <p>/* Go Ask My AI Assistant Mikka. */</p>
+          <p>/* She Knows Everything (Almost) */</p>
+          <p>/* She's Nice (Maybe). */</p>
+        </div>
+      )}
+
       {/* Music Player */}
       {!asMessage && <MusicPlayerControls />}
 
       {/* Footer - Sticks to bottom */}
       {!asMessage && (
-        <div className="mt-auto mb-8">
-          <div className="border-t-2 border-terminal-border m-6"></div>
+        <div className="my-4 mb-8">
           <div className="text-xs text-terminal-dim text-center">
-            SYSTEM READY
+            SYSTEM READY #1.0
           </div>
           <div className="text-xs text-terminal-dim text-center">
             since 2025-12-16T08:19:07-05:00

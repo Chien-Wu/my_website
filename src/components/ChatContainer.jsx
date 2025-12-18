@@ -4,6 +4,7 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import NameCard from "./NameCard";
+import FaultyTerminal from "./FaultyTerminal";
 
 /**
  * Loading indicator
@@ -24,10 +25,8 @@ function LoadingIndicator() {
 function EmptyState() {
   return (
     <div className="flex items-center justify-center h-full p-8">
-      <div className="terminal-box p-8 max-w-md text-center">
-        <div className="font-terminal text-xl mb-4 text-glow">
-          TERMINAL v1.0
-        </div>
+      <div className="p-8 max-w-md text-center">
+        <div className="font-terminal text-xl mb-4 text-glow">MIKKA v2.1</div>
         <div className="text-terminal-dim mb-6">Ready.</div>
         <div className="text-sm text-terminal-text">
           Type a message to begin...
@@ -53,16 +52,45 @@ export default function ChatContainer() {
   const hasMessages = messages.length > 0;
 
   return (
-    <div className="flex flex-col h-screen p-6">
+    <div className="flex flex-col h-screen p-6 relative">
+      {/* FaultyTerminal Background */}
+      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+        <FaultyTerminal
+          scale={1.5}
+          gridMul={[1, 1]}
+          digitSize={1.5}
+          timeScale={0.2}
+          pause={false}
+          scanlineIntensity={1}
+          glitchAmount={1}
+          flickerAmount={2}
+          noiseAmp={1.5}
+          chromaticAberration={0}
+          dither={0}
+          curvature={0}
+          tint="#003300"
+          mouseReact={true}
+          mouseStrength={0.5}
+          pageLoadAnimation={false}
+          brightness={0.3}
+        />
+      </div>
+
       {/* Header */}
-      <div className="terminal-box bg-terminal-text px-1">
+      <div
+        className="terminal-box bg-terminal-text px-1 relative"
+        style={{ zIndex: 1, pointerEvents: "auto" }}
+      >
         <h1 className="text-left text-s text-terminal-bg leading-none">
           Give Me 20$ ▶ Your Ad Here
         </h1>
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div
+        className="flex-1 overflow-y-auto p-4 relative"
+        style={{ zIndex: 1, pointerEvents: "auto" }}
+      >
         {/* Messages */}
         {!hasMessages && <EmptyState />}
 
@@ -86,7 +114,9 @@ export default function ChatContainer() {
       </div>
 
       {/* Input */}
-      <ChatInput onSend={send} isLoading={isLoading} />
+      <div className="relative" style={{ zIndex: 1, pointerEvents: "auto" }}>
+        <ChatInput onSend={send} isLoading={isLoading} />
+      </div>
     </div>
   );
 }

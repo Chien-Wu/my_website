@@ -29,7 +29,7 @@ export default function MusicPlayerControls() {
   if (!currentSong) return null;
 
   return (
-    <div className="terminal-box p-3 m-6">
+    <div className="terminal-box p-3 mx-6 my-0">
       {/* Header */}
       <div className="text-xs text-terminal-dim mb-2 flex items-center gap-2">
         <span>♫</span>
