@@ -1,12 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import { sendMessage } from '../services/api'
 import { parseMessageContent, generateMessageId } from '../utils/messageParser'
+import { getSessionId, regenerateSessionId } from '../utils/session'
 
 const ChatContext = createContext(null)
 
 const STORAGE_KEY = 'terminal_chat_history'
-const SESSION_KEY = 'terminal_session_id'
 
 export function ChatProvider({ children }) {
   const [messages, setMessages] = useState([])
@@ -16,12 +15,8 @@ export function ChatProvider({ children }) {
 
   // Initialize session and load history
   useEffect(() => {
-    // Get or create session ID
-    let sid = localStorage.getItem(SESSION_KEY)
-    if (!sid) {
-      sid = uuidv4()
-      localStorage.setItem(SESSION_KEY, sid)
-    }
+    // Get or create session ID (shared across app)
+    const sid = getSessionId()
     setSessionId(sid)
 
     // Load chat history
@@ -141,9 +136,8 @@ export function ChatProvider({ children }) {
     localStorage.removeItem(STORAGE_KEY)
 
     // Generate new session ID
-    const newSessionId = uuidv4()
+    const newSessionId = regenerateSessionId()
     setSessionId(newSessionId)
-    localStorage.setItem(SESSION_KEY, newSessionId)
   }
 
   const value = {

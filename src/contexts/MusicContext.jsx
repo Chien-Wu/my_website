@@ -1,12 +1,27 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { Howl } from "howler";
+import { getSessionId } from "../utils/session";
+import { collectTelemetry } from "../utils/telemetry";
 
 const MusicContext = createContext();
 
-// Fetch all songs from starter pack API
+// Fetch all songs from starter pack API with telemetry
 async function fetchPlaylist() {
   try {
-    const response = await fetch(import.meta.env.VITE_STARTER_PACK_URL);
+    const sessionId = getSessionId();
+    const telemetry = collectTelemetry();
+
+    const response = await fetch(import.meta.env.VITE_STARTER_PACK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        session_id: sessionId,
+        ...telemetry,
+      }),
+    });
+
     if (!response.ok) throw new Error("Failed to fetch starter pack");
 
     const data = await response.json();

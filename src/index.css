@@ -170,23 +170,14 @@ body {
   box-shadow: 0 0 10px var(--glow);
 }
 
-/* Scrollbar styling */
+/* Hide scrollbar on all devices */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg);
-  border-left: 1px solid var(--border);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--text-dim);
-  border: 1px solid var(--border);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text);
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 /* Data Flow Animation */
