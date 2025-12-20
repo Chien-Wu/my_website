@@ -11,10 +11,13 @@ async function fetchPlaylist() {
     const sessionId = getSessionId();
     const telemetry = collectTelemetry();
 
-    const response = await fetch(import.meta.env.VITE_STARTER_PACK_URL, {
+    // Use Cloudflare Pages Function proxy instead of direct n8n URL
+    const response = await fetch("/api/starter-pack", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // Optional: Add client secret if configured in Cloudflare
+        // 'X-Client-Secret': 'your-secret-here',
       },
       body: JSON.stringify({
         session_id: sessionId,

@@ -1,8 +1,12 @@
 /**
  * API service for n8n backend communication
+ *
+ * Now uses Cloudflare Pages Function proxy at /api/n8n
+ * This avoids CORS issues and hides the real n8n webhook URL
  */
 
-const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || ''
+// Use Cloudflare Pages Function proxy instead of direct n8n URL
+const API_ENDPOINT = '/api/n8n'
 
 /**
  * Send message to n8n chatbot with streaming support
@@ -12,16 +16,13 @@ const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || ''
  * @returns {Promise<void>}
  */
 export async function sendMessage(message, sessionId, onChunk) {
-  if (!N8N_WEBHOOK_URL) {
-    // Mock response for development
-    return mockStreamingResponse(message, onChunk)
-  }
-
   try {
-    const response = await fetch(N8N_WEBHOOK_URL, {
+    const response = await fetch(API_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        // Optional: Add client secret if configured in Cloudflare
+        // 'X-Client-Secret': 'your-secret-here',
       },
       body: JSON.stringify({
         message,

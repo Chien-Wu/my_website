@@ -59,7 +59,7 @@ export default function ChatContainer() {
           scale={1.5}
           gridMul={[1, 1]}
           digitSize={1.5}
-          timeScale={0.2}
+          timeScale={0.1}
           pause={false}
           scanlineIntensity={1}
           glitchAmount={0.5}
@@ -71,7 +71,7 @@ export default function ChatContainer() {
           tint="#065e0f"
           mouseReact={false}
           mouseStrength={0}
-          pageLoadAnimation={false}
+          pageLoadAnimation={true}
           brightness={0.3}
         />
       </div>

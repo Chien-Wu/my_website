@@ -105,7 +105,7 @@ export default function FrontSide({ asMessage, shouldFade, onFlip }) {
       {!asMessage && (
         <div className="mx-6 p-4 text-xs text-terminal-dim">
           <p>/* Note From Site Creator Chien: */</p>
-          <p>/* None of my project/info is here, */</p>
+          <p>/* My project/info isn't listed, */</p>
           <p>/* Go Ask My AI Assistant Mikka. */</p>
           <p>/* She Knows Everything (Almost) */</p>
           <p>/* She's Nice (Maybe). */</p>
