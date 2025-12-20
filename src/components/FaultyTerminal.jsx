@@ -160,14 +160,10 @@ vec3 getColor(vec2 p){
       p.x += extra;
     }
 
+    // OPTIMIZED: Single digit call instead of 9 samples
     float middle = digit(p);
 
-    const float off = 0.002;
-    float sum = digit(p + vec2(-off, -off)) + digit(p + vec2(0.0, -off)) + digit(p + vec2(off, -off)) +
-                digit(p + vec2(-off, 0.0)) + digit(p + vec2(0.0, 0.0)) + digit(p + vec2(off, 0.0)) +
-                digit(p + vec2(-off, off)) + digit(p + vec2(0.0, off)) + digit(p + vec2(off, off));
-
-    vec3 baseColor = vec3(0.9) * middle + sum * 0.1 * vec3(1.0) * bar;
+    vec3 baseColor = vec3(0.9) * middle * bar;
     return baseColor;
 }
 
@@ -249,9 +245,9 @@ export default function FaultyTerminal({
   dither = 0,
   curvature = 0.2,
   tint = '#ffffff',
-  mouseReact = true,
+  mouseReact = false, // OPTIMIZED: Disabled mouse tracking
   mouseStrength = 0.2,
-  dpr = Math.min(window.devicePixelRatio || 1, 2),
+  dpr = 1, // OPTIMIZED: Fixed at 1 for lower resolution
   pageLoadAnimation = true,
   brightness = 1,
   className,
@@ -340,17 +336,36 @@ export default function FaultyTerminal({
     resizeObserver.observe(ctn);
     resize();
 
+    // OPTIMIZED: 30 FPS cap + Page Visibility API
+    const targetFPS = 30;
+    const frameDelay = 1000 / targetFPS;
+    let lastFrameTime = 0;
+    let isVisible = true;
+
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     const update = t => {
       rafRef.current = requestAnimationFrame(update);
+
+      // OPTIMIZED: Pause when tab not visible
+      if (!isVisible) return;
+
+      // OPTIMIZED: 30 FPS throttle
+      const elapsed = t - lastFrameTime;
+      if (elapsed < frameDelay) return;
+      lastFrameTime = t - (elapsed % frameDelay);
 
       if (pageLoadAnimation && loadAnimationStartRef.current === 0) {
         loadAnimationStartRef.current = t;
       }
 
       if (!pause) {
-        const elapsed = (t * 0.001 + timeOffsetRef.current) * timeScale;
-        program.uniforms.iTime.value = elapsed;
-        frozenTimeRef.current = elapsed;
+        const timeElapsed = (t * 0.001 + timeOffsetRef.current) * timeScale;
+        program.uniforms.iTime.value = timeElapsed;
+        frozenTimeRef.current = timeElapsed;
       } else {
         program.uniforms.iTime.value = frozenTimeRef.current;
       }
@@ -360,18 +375,6 @@ export default function FaultyTerminal({
         const animationElapsed = t - loadAnimationStartRef.current;
         const progress = Math.min(animationElapsed / animationDuration, 1);
         program.uniforms.uPageLoadProgress.value = progress;
-      }
-
-      if (mouseReact) {
-        const dampingFactor = 0.08;
-        const smoothMouse = smoothMouseRef.current;
-        const mouse = mouseRef.current;
-        smoothMouse.x += (mouse.x - smoothMouse.x) * dampingFactor;
-        smoothMouse.y += (mouse.y - smoothMouse.y) * dampingFactor;
-
-        const mouseUniform = program.uniforms.uMouse.value;
-        mouseUniform[0] = smoothMouse.x;
-        mouseUniform[1] = smoothMouse.y;
       }
 
       renderer.render({ scene: mesh });
@@ -391,6 +394,7 @@ export default function FaultyTerminal({
     return () => {
       cancelAnimationFrame(rafRef.current);
       resizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (mouseReact) ctn.removeEventListener('mousemove', handleMouseMove);
       if (gl.canvas.parentElement === ctn) ctn.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
