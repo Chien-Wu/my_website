@@ -49,12 +49,13 @@ export default function ChatMessage({ message }) {
 
   // User messages: Right-aligned, max 2/3 width
   if (isUser) {
+    const username = localStorage.getItem("username") || "visitor@999";
     return (
       <div className="mb-4 font-mono flex justify-end">
         <div className="inline-flex flex-col  justify-end max-w-[66.666%]">
           {/* Header */}
           <div className="vintage-message-header flex justify-end items-center gap-2">
-            <span className="text-terminal-text">USER</span>
+            <span className="text-terminal-text">{username}</span>
             <span className="vintage-timestamp text-terminal-dim">
               [{timestamp}]
             </span>
@@ -96,7 +97,7 @@ export default function ChatMessage({ message }) {
   if (isAssistant) {
     return (
       <div className="mb-4 font-mono">
-        <div className="">
+        <div className="max-w-[66.666%]">
           {/* Header */}
           <div className="vintage-message-header flex justify-left items-end gap-2">
             {/* Avatar */}
@@ -110,7 +111,7 @@ export default function ChatMessage({ message }) {
           </div>
           {/* Content */}
           <div className="vintage-message-content flex gap-3">
-            <div className="flex-1 text-terminal-text">
+            <div className="flex-1 text-terminal-text break-words">
               {message.content.map((block, index) => (
                 <ContentBlock key={index} block={block} />
               ))}

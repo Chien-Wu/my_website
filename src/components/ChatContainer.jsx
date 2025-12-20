@@ -59,10 +59,10 @@ export default function ChatContainer() {
           scale={1.5}
           gridMul={[1, 1]}
           digitSize={1.5}
-          timeScale={0.2}
+          timeScale={0.1}
           pause={false}
           scanlineIntensity={1}
-          glitchAmount={1}
+          glitchAmount={0.5}
           flickerAmount={2}
           noiseAmp={1.5}
           chromaticAberration={0}

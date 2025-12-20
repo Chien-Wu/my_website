@@ -25,7 +25,17 @@ async function fetchPlaylist() {
     if (!response.ok) throw new Error("Failed to fetch starter pack");
 
     const data = await response.json();
-    const musicList = data.music || [];
+    console.log("[MusicContext] Full API Response:", data);
+
+    // API returns an array with one object
+    const responseData = Array.isArray(data) ? data[0] : data;
+    const musicList = responseData.music || [];
+    const username = responseData.user?.username || "visitor@999";
+
+    console.log("[MusicContext] Extracted username:", username);
+    // Store username in localStorage
+    localStorage.setItem("username", username);
+    console.log("[MusicContext] Verified localStorage:", localStorage.getItem("username"));
 
     // Transform to our playlist format
     return musicList.map((track) => ({
