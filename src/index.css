@@ -25,6 +25,11 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow: hidden;
+  /* Safe area insets for mobile browser UI (address bar, navigation tabs) */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* CRT Effects */
@@ -300,6 +305,13 @@ body {
   font-family: "IBM Plex Mono", monospace;
   line-height: 1;
   user-select: none;
+}
+
+/* Music player control buttons - force text rendering for emoji */
+.music-control-btn {
+  font-family: "IBM Plex Mono", monospace;
+  letter-spacing: -0.1em; /* Tighten spacing for || */
+  font-variant-emoji: text; /* Force text rendering, not emoji */
 }
 
 /* Mobile: reduce effects for performance */

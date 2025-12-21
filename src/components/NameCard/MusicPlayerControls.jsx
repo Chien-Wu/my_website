@@ -1,4 +1,6 @@
 import { useMusic } from "../../contexts/MusicContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackwardFast, faForwardFast, faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Music Player Controls Component
@@ -46,30 +48,30 @@ export default function MusicPlayerControls() {
       <div className="flex items-center justify-center gap-6 mb-3">
         <button
           onClick={previous}
-          className="text-terminal-text hover:text-glow transition-all text-xl"
+          className="text-terminal-text hover:text-glow transition-all"
           title="Previous song"
         >
-          ⏮
+          <FontAwesomeIcon icon={faBackwardFast} />
         </button>
         <button
           onClick={toggle}
-          className="text-3xl text-terminal-text hover:text-glow transition-all"
+          className="text-2xl text-terminal-text hover:text-glow transition-all"
           title={isPlaying ? "Pause" : "Play"}
         >
-          {isPlaying ? "⏸" : "▶"}
+          <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
         </button>
         <button
           onClick={next}
-          className="text-terminal-text hover:text-glow transition-all text-xl"
+          className="text-terminal-text hover:text-glow transition-all"
           title="Next song"
         >
-          ⏭
+          <FontAwesomeIcon icon={faForwardFast} />
         </button>
       </div>
 
       {/* Volume Control */}
       <div className="flex items-center gap-2">
-        <span className="text-xs text-terminal-dim">🔊</span>
+        <span className="text-xs text-terminal-dim">[VOL]</span>
         <input
           type="range"
           min="0"
