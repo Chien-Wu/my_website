@@ -89,11 +89,45 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const body = await request.arrayBuffer();
     const contentType = request.headers.get("Content-Type") || "application/json";
 
+    // Pass-through browser headers for analytics/telemetry
+    const passThrough = [
+      "user-agent",
+      "accept-language",
+      "origin",
+      "referer",
+      "sec-ch-ua",
+      "sec-ch-ua-platform",
+      "sec-ch-ua-mobile",
+      "save-data",
+    ];
+
+    const headers = new Headers();
+    headers.set("Content-Type", contentType);
+
+    // Forward browser headers to n8n
+    for (const h of passThrough) {
+      const v = request.headers.get(h);
+      if (v) headers.set(h, v);
+    }
+
+    // Forward real IP address (Cloudflare provides this)
+    const cfIp =
+      request.headers.get("cf-connecting-ip") ||
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+    if (cfIp) headers.set("x-forwarded-for", cfIp);
+
+    // Forward country code
+    const cfCountry = request.headers.get("cf-ipcountry");
+    if (cfCountry) headers.set("x-ip-country", cfCountry);
+
+    // Forward timezone (if available from Cloudflare)
+    // @ts-ignore - request.cf is Cloudflare-specific runtime property
+    const tz = request.cf?.timezone;
+    if (tz) headers.set("x-timezone", tz);
+
     const upstream = await fetch(env.N8N_WEBHOOK_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": contentType,
-      },
+      headers,
       body,
     });
 
