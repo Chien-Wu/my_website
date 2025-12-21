@@ -11,20 +11,22 @@ import FaultyTerminal from "./FaultyTerminal";
  */
 function LoadingIndicator() {
   const [wordIndex, setWordIndex] = useState(0);
-  const words = ['thinking', 'spinning', 'vibing', 'cooking', 'Pixelling'];
+  const words = ["thinking", "spinning", "vibing", "cooking", "Pixelling"];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % 5);
-    }, 1000); // Change word every 1 second
+    }, 3000); // Change word every 1.5 seconds
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="mb-4 font-mono">
-      <span className="text-terminal-dim mr-2">$</span>
-      <span className="loading-flash text-terminal-text">{words[wordIndex]}</span>
+      <span className="loading-flash text-terminal-dim mr-2">$</span>
+      <span className="loading-flash text-terminal-text">
+        {words[wordIndex]}
+      </span>
       <span className="cursor-blink">...</span>
     </div>
   );
