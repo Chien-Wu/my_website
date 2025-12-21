@@ -76,49 +76,41 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   try {
-    const body = await request.arrayBuffer();
-    const contentType = request.headers.get("Content-Type") || "application/json";
-
-    // Pass-through browser headers for analytics/telemetry
-    const passThrough = [
-      "user-agent",
-      "accept-language",
-      "origin",
-      "referer",
-      "sec-ch-ua",
-      "sec-ch-ua-platform",
-      "sec-ch-ua-mobile",
-      "save-data",
-    ];
-
-    const headers = new Headers();
-    headers.set("Content-Type", contentType);
-
-    // Forward browser headers to n8n
-    for (const h of passThrough) {
-      const v = request.headers.get(h);
-      if (v) headers.set(h, v);
-    }
-
-    // Forward real IP address (Cloudflare provides this)
-    const cfIp =
-      request.headers.get("cf-connecting-ip") ||
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-    if (cfIp) headers.set("x-forwarded-for", cfIp);
-
-    // Forward country code
-    const cfCountry = request.headers.get("cf-ipcountry");
-    if (cfCountry) headers.set("x-ip-country", cfCountry);
-
-    // Forward timezone (if available from Cloudflare)
+    // Collect client metadata from Cloudflare
+    const clientIp = request.headers.get("cf-connecting-ip") || "";
+    const clientCountry = request.headers.get("cf-ipcountry") || "";
     // @ts-ignore - request.cf is Cloudflare-specific runtime property
-    const tz = request.cf?.timezone;
-    if (tz) headers.set("x-timezone", tz);
+    const clientTimezone = request.cf?.timezone || null;
+
+    const contentType = request.headers.get("Content-Type") || "";
+    let bodyToSend: ArrayBuffer | string;
+
+    // If JSON request, inject client metadata into body
+    if (contentType.includes("application/json")) {
+      const payload = await request.json();
+      payload.__client = {
+        ip: clientIp,
+        country: clientCountry,
+        timezone: clientTimezone,
+        ua: request.headers.get("user-agent") || null,
+        lang: request.headers.get("accept-language") || null,
+        origin: request.headers.get("origin") || null,
+        referer: request.headers.get("referer") || null,
+        secChUa: request.headers.get("sec-ch-ua") || null,
+        secChUaPlatform: request.headers.get("sec-ch-ua-platform") || null,
+        secChUaMobile: request.headers.get("sec-ch-ua-mobile") || null,
+        saveData: request.headers.get("save-data") || null,
+      };
+      bodyToSend = JSON.stringify(payload);
+    } else {
+      // Non-JSON request, pass through as-is
+      bodyToSend = await request.arrayBuffer();
+    }
 
     const upstream = await fetch(env.N8N_STARTER_PACK_URL, {
       method: "POST",
-      headers,
-      body,
+      headers: { "Content-Type": contentType || "application/json" },
+      body: bodyToSend as any,
     });
 
     const respBody = await upstream.arrayBuffer();
