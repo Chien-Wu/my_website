@@ -183,6 +183,26 @@ body {
   animation: blink 1s infinite;
 }
 
+/* Loading indicator flash effect: dark → light → dark (1 second cycle) */
+@keyframes loadingFlash {
+  0% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 10px var(--glow), 0 0 20px var(--glow);
+  }
+  100% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+}
+
+.loading-flash {
+  animation: loadingFlash 1s ease-in-out infinite;
+}
+
 /* Terminal box borders */
 .terminal-box {
   border: 2px solid var(--border);

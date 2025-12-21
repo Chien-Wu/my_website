@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useChat } from "../contexts/ChatContext";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import ChatMessage from "./ChatMessage";
@@ -10,10 +10,21 @@ import FaultyTerminal from "./FaultyTerminal";
  * Loading indicator
  */
 function LoadingIndicator() {
+  const [wordIndex, setWordIndex] = useState(0);
+  const words = ['thinking', 'spinning', 'vibing', 'cooking', 'Pixelling'];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % 5);
+    }, 1000); // Change word every 1 second
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="mb-4 font-mono">
       <span className="text-terminal-dim mr-2">$</span>
-      <span className="text-terminal-text">Thinking</span>
+      <span className="loading-flash text-terminal-text">{words[wordIndex]}</span>
       <span className="cursor-blink">...</span>
     </div>
   );
