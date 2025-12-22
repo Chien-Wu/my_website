@@ -183,7 +183,7 @@ body {
   animation: blink 1s infinite;
 }
 
-/* Loading indicator flash effect: dark → light → dark (1.5 second cycle) */
+/* Loading indicator flash effect: dark → light → dark (3 second cycle) */
 @keyframes loadingFlash {
   0% {
     opacity: 0.4;
@@ -200,7 +200,7 @@ body {
 }
 
 .loading-flash {
-  animation: loadingFlash 1.5s ease-in-out infinite;
+  animation: loadingFlash 3s ease-in-out infinite;
 }
 
 /* Terminal box borders */

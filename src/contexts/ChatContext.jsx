@@ -95,7 +95,7 @@ export function ChatProvider({ children }) {
           )
         )
 
-        setTimeout(typeNextChunk, 50) // 50ms delay per chunk
+        setTimeout(typeNextChunk, 100) // 100ms delay per chunk
       }
 
       // Call API with streaming callback

@@ -27,7 +27,7 @@ function LoadingIndicator() {
       <span className="loading-flash text-terminal-text">
         {words[wordIndex]}
       </span>
-      <span className="cursor-blink">...</span>
+      <span className="loading-flash">...</span>
     </div>
   );
 }

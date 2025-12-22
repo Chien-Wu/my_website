@@ -5,6 +5,8 @@
  * This avoids CORS issues and hides the real n8n webhook URL
  */
 
+import { sanitizeStreamContent } from '../utils/contentFilter'
+
 // Use Cloudflare Pages Function proxy instead of direct n8n URL
 const API_ENDPOINT = '/api/n8n'
 
@@ -62,8 +64,13 @@ export async function sendMessage(message, sessionId, onChunk) {
           const data = JSON.parse(line)
 
           // Only process 'item' type chunks with content
-          if (data.type === 'item' && data.content) {
-            onChunk(data.content)
+          // Also support backend display flag (data.display !== false)
+          if (data.type === 'item' && data.content && data.display !== false) {
+            // Sanitize content to remove tool call traces
+            const sanitized = sanitizeStreamContent(data.content)
+            if (sanitized) {  // Only send non-empty chunks
+              onChunk(sanitized)
+            }
           }
         } catch (e) {
           console.warn('Failed to parse streaming chunk:', line)
