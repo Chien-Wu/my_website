@@ -13,6 +13,9 @@ export function sanitizeStreamContent(content) {
     // "Calling Call 'Tool Name' with input: {...}"
     /Calling Call ['"]([^'"]+)['"] with input:\s*\{[^}]*\}/gi,
 
+    // "Calling Tool_Name with input: {...}" (without "Call" keyword)
+    /Calling\s+[\w_]+\s+with input:\s*\{[^}]*\}/gi,
+
     // "Calling tool_name(...)"
     /Calling\s+[\w_]+\s*\([^)]*\)/gi,
 
@@ -27,8 +30,11 @@ export function sanitizeStreamContent(content) {
   ];
 
   patterns.forEach(pattern => {
-    cleaned = cleaned.replace(pattern, '');
+    cleaned = cleaned.replace(pattern, ' '); // Replace with space instead of empty string
   });
+
+  // Normalize multiple spaces to single space
+  cleaned = cleaned.replace(/\s+/g, ' ');
 
   return cleaned.trim();
 }
